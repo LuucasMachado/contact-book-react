@@ -3,13 +3,14 @@ import { getContact, updateContact } from "../contacts";
 
 export async function loader({ params }) {
   const contact = await getContact(params.contactId);
+  const urlPhoto = 'https://toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png'
   if (!contact) {
     throw new Response("", {
       status: 404,
       statusText: "Not Found",
     });
   }
-  return { contact };
+  return { contact, urlPhoto };
 }
 
 export async function action({ request, params }) {
@@ -21,13 +22,13 @@ export async function action({ request, params }) {
 
 
 export default function Contact() {
-  const { contact } = useLoaderData();
+  const { contact, urlPhoto } = useLoaderData();
   return (
     <div id="contact">
       <div>
         <img
           key={contact.avatar}
-          src={contact.avatar || null}
+          src={contact.avatar || urlPhoto}
         />
       </div>
 
